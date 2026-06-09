@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nova Forma | Cadastro</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg:       #0a0a0a;
+  --surface:  #111111;
+  --border:   rgba(255,255,255,.08);
+  --border-focus: rgba(255,255,255,.28);
+  --gold:     #C9A84C;
+  --gold-dim: rgba(201,168,76,.18);
+  --text:     #f0f0f0;
+  --text-2:   #999;
+  --text-3:   #555;
+  --input-bg: rgba(255,255,255,.04);
+  --err:      #e05c5c;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 3rem 1.25rem 5rem;
+}
+
+/* ---- CARD ---- */
+.card {
+  width: 100%;
+  max-width: 560px;
+}
+
+/* ---- HEADER ---- */
+.header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.logo-wrap {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 1.25rem;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+}
+
+.logo-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+}
+
+.org-name {
+  font-size: .7rem;
+  font-weight: 500;
+  letter-spacing: .22em;
+  color: var(--text-2);
+  text-transform: uppercase;
+}
+
+/* ---- PROGRESS ---- */
+.progress-wrap {
+  margin-bottom: 2.5rem;
+}
+
+.progress-dots {
+  display: flex;
+  justify-content: center;
+  gap: .5rem;
+  margin-bottom: .75rem;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text-3);
+  transition: background .3s, transform .3s;
+}
+
+.dot.active {
+  background: var(--gold);
+  transform: scale(1.25);
+}
+
+.dot.done {
+  background: rgba(201,168,76,.4);
+}
+
+.step-meta {
+  text-align: center;
+  font-size: .7rem;
+  color: var(--text-3);
+  letter-spacing: .06em;
+}
+
+/* ---- FORM PANEL ---- */
+.form-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2rem;
+}
+
+/* ---- FORM STEPS ---- */
+.form-step { display: none; animation: fade-in .25s ease; }
+.form-step.active { display: block; }
+
+@keyframes fade-in {
+  from { opacity:0; transform:translateY(6px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+.step-title {
+  font-size: .85rem;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.5rem;
+}
+
+/* ---- FIELDS ---- */
+.field { margin-bottom: 1rem; }
+.row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
+.row-3 { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: .75rem; }
+
+label {
+  display: block;
+  font-size: .72rem;
+  font-weight: 500;
+  letter-spacing: .04em;
+  color: var(--text-2);
+  margin-bottom: .4rem;
+}
+
+label .req { color: var(--gold); margin-left: 2px; }
+
+.input, .sel, .ta {
+  width: 100%;
+  padding: .75rem .9rem;
+  background: var(--input-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-family: inherit;
+  font-size: .875rem;
+  transition: border-color .2s, box-shadow .2s;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.input::placeholder, .ta::placeholder {
+  color: var(--text-3);
+  font-size: .82rem;
+}
+
+.input:focus, .sel:focus, .ta:focus {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(255,255,255,.04);
+}
+
+.sel {
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right .9rem center;
+  padding-right: 2.5rem;
+}
+
+.sel option { background: #1a1a1a; color: var(--text); }
+
+.ta { resize: vertical; min-height: 100px; line-height: 1.6; }
+
+.input.err, .sel.err, .ta.err { border-color: var(--err); }
+.err-msg {
+  font-size: .7rem;
+  color: var(--err);
+  margin-top: .3rem;
+  display: none;
+}
+.err-msg.on { display: block; }
+
+/* Radio / Checkbox */
+.check-group, .radio-group { display: flex; flex-direction: column; gap: .45rem; }
+
+.opt-label {
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+  cursor: pointer;
+  padding: .65rem .9rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--input-bg);
+  font-size: .85rem;
+  color: var(--text-2);
+  transition: border-color .2s, color .2s;
+  margin-bottom: 0;
+  letter-spacing: 0;
+  text-transform: none;
+  font-weight: 400;
+}
+
+.opt-label:hover { border-color: var(--border-focus); color: var(--text); }
+
+.opt-label input[type="radio"],
+.opt-label input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  appearance: none;
+  -webkit-appearance: none;
+  border: 1.5px solid var(--text-3);
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  flex-shrink: 0;
+  position: relative;
+  transition: border-color .2s, background .2s;
+}
+
+.opt-label input[type="checkbox"] { border-radius: 4px; }
+
+.opt-label input[type="radio"]:checked {
+  background: var(--gold);
+  border-color: var(--gold);
+  box-shadow: inset 0 0 0 3px var(--surface);
+}
+
+.opt-label input[type="checkbox"]:checked {
+  background: var(--gold);
+  border-color: var(--gold);
+}
+
+.opt-label input[type="checkbox"]:checked::after {
+  content: '';
+  position: absolute;
+  top: 2px; left: 5px;
+  width: 4px; height: 7px;
+  border: 1.5px solid #0a0a0a;
+  border-top: none; border-left: none;
+  transform: rotate(45deg);
+}
+
+.opt-label:has(input:checked) {
+  border-color: var(--gold-dim);
+  color: var(--text);
+}
+
+/* ---- BUTTONS ---- */
+.btn-row {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  margin-top: 1.75rem;
+}
+
+.btn-back {
+  padding: .7rem 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-2);
+  font-family: inherit;
+  font-size: .8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color .2s, color .2s;
+  white-space: nowrap;
+}
+
+.btn-back:hover { border-color: var(--border-focus); color: var(--text); }
+
+.btn-next {
+  flex: 1;
+  padding: .85rem 1.5rem;
+  background: var(--gold);
+  color: #0a0a0a;
+  border: none;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: .85rem;
+  font-weight: 600;
+  letter-spacing: .04em;
+  cursor: pointer;
+  transition: opacity .2s, transform .15s;
+}
+
+.btn-next:hover { opacity: .88; }
+.btn-next:active { transform: scale(.98); }
+.btn-next:disabled { opacity: .4; cursor: not-allowed; }
+
+/* ---- SUCCESS ---- */
+.success { display: none; text-align: center; animation: fade-in .4s ease; }
+.success.on { display: block; }
+
+.success-icon {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 1.5rem;
+  border: 1.5px solid var(--gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: pop .5s cubic-bezier(.34,1.56,.64,1) both;
+}
+
+@keyframes pop {
+  from { transform: scale(.5); opacity: 0; }
+  to   { transform: scale(1);  opacity: 1; }
+}
+
+.success-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: .5rem;
+}
+
+.success-sub {
+  font-size: .82rem;
+  color: var(--text-2);
+  line-height: 1.8;
+  max-width: 380px;
+  margin: 0 auto;
+}
+
+.success-sub em {
+  display: block;
+  color: var(--text-3);
+  font-size: .75rem;
+  margin-top: 1rem;
+}
+
+/* ---- RESPONSIVE ---- */
+@media (max-width: 520px) {
+  .page { padding: 2rem 1rem 4rem; }
+  .form-panel { padding: 1.5rem 1.25rem; }
+  .row-2, .row-3 { grid-template-columns: 1fr; }
+  .btn-row { flex-direction: column-reverse; }
+  .btn-back { width: 100%; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<main class="page">
+  <div class="card">
+
+    <!-- HEADER -->
+    <header class="header">
+      <div class="logo-wrap">
+        <img src="assets/logo.jpg" alt="Nova Forma">
+      </div>
+      <p class="org-name">Cadastro da Comunidade</p>
+    </header>
+
+    <!-- PROGRESS -->
+    <div class="progress-wrap" id="progressWrap" aria-live="polite">
+      <div class="progress-dots">
+        <div class="dot active" id="dot0"></div>
+        <div class="dot"       id="dot1"></div>
+        <div class="dot"       id="dot2"></div>
+        <div class="dot"       id="dot3"></div>
+      </div>
+      <p class="step-meta" id="stepMeta">Etapa 1 de 4</p>
+    </div>
+
+    <!-- PANEL -->
+    <div class="form-panel" id="formPanel">
+
+      <!-- FORM (Netlify) -->
+      <form
+        id="mainForm"
+        name="cadastro-nova-forma"
+        method="POST"
+        data-netlify="true"
+        netlify-honeypot="bot-field"
+        novalidate
+      >
+        <input type="hidden" name="form-name" value="cadastro-nova-forma">
+        <p style="display:none" aria-hidden="true">
+          <label>Não preencha: <input name="bot-field"></label>
+        </p>
+
+        <!-- ETAPA 1 -->
+        <fieldset class="form-step active" id="s0">
+          <p class="step-title">Dados Pessoais</p>
+
+          <div class="field">
+            <label for="nome">Nome Completo <span class="req">*</span></label>
+            <input class="input" type="text" id="nome" name="nome"
+              placeholder="Seu nome completo" autocomplete="name" required>
+            <p class="err-msg" id="e-nome">Informe seu nome completo.</p>
+          </div>
+
+          <div class="field row-2">
+            <div>
+              <label for="nascimento">Data de Nascimento <span class="req">*</span></label>
+              <input class="input" type="date" id="nascimento" name="dataNascimento" required>
+              <p class="err-msg" id="e-nasc">Campo obrigatório.</p>
+            </div>
+            <div>
+              <label for="sexo">Sexo <span class="req">*</span></label>
+              <select class="sel" id="sexo" name="sexo" required>
+                <option value="">Selecione...</option>
+                <option value="Masculino">Masculino</option>
+                <option value="Feminino">Feminino</option>
+              </select>
+              <p class="err-msg" id="e-sexo">Campo obrigatório.</p>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="telefone">WhatsApp / Telefone <span class="req">*</span></label>
+            <input class="input" type="tel" id="telefone" name="telefone"
+              placeholder="(XX) XXXXX-XXXX" autocomplete="tel" required>
+            <p class="err-msg" id="e-tel">Informe um número válido.</p>
+          </div>
+
+          <div class="field">
+            <label for="email">E-mail <span class="req">*</span></label>
+            <input class="input" type="email" id="email" name="email"
+              placeholder="seu@email.com" autocomplete="email" required>
+            <p class="err-msg" id="e-email">Informe um e-mail válido.</p>
+          </div>
+
+          <div class="btn-row">
+            <button type="button" class="btn-next" onclick="goNext()">Continuar &rarr;</button>
+          </div>
+        </fieldset>
+
+        <!-- ETAPA 2 -->
+        <fieldset class="form-step" id="s1">
+          <p class="step-title">Paróquia e Localização</p>
+
+          <div class="field">
+            <label for="paroquia">Nome da Paróquia <span class="req">*</span></label>
+            <input class="input" type="text" id="paroquia" name="paroquia"
+              placeholder="Ex: Paróquia Nossa Senhora Aparecida" required>
+            <p class="err-msg" id="e-par">Campo obrigatório.</p>
+          </div>
+
+          <div class="field row-3">
+            <div>
+              <label for="cidade">Cidade <span class="req">*</span></label>
+              <input class="input" type="text" id="cidade" name="cidade"
+                placeholder="Sua cidade" required>
+              <p class="err-msg" id="e-cid">Campo obrigatório.</p>
+            </div>
+            <div>
+              <label for="estado">Estado <span class="req">*</span></label>
+              <select class="sel" id="estado" name="estado" required>
+                <option value="">UF</option>
+                <option>AC</option><option>AL</option><option>AP</option><option>AM</option>
+                <option>BA</option><option>CE</option><option>DF</option><option>ES</option>
+                <option>GO</option><option>MA</option><option>MT</option><option>MS</option>
+                <option>MG</option><option>PA</option><option>PB</option><option>PR</option>
+                <option>PE</option><option>PI</option><option>RJ</option><option>RN</option>
+                <option>RS</option><option>RO</option><option>RR</option><option>SC</option>
+                <option>SP</option><option>SE</option><option>TO</option>
+              </select>
+              <p class="err-msg" id="e-est">Selecione.</p>
+            </div>
+            <div>
+              <label for="pais">País</label>
+              <select class="sel" id="pais" name="pais">
+                <option value="Brasil" selected>Brasil</option>
+                <option value="Portugal">Portugal</option>
+                <option value="Angola">Angola</option>
+                <option value="Moçambique">Moçambique</option>
+                <option value="Outro">Outro</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="diocese">Diocese / Arquidiocese</label>
+            <input class="input" type="text" id="diocese" name="diocese"
+              placeholder="Opcional">
+          </div>
+
+          <div class="btn-row">
+            <button type="button" class="btn-back" onclick="goPrev()">&larr; Voltar</button>
+            <button type="button" class="btn-next" onclick="goNext()">Continuar &rarr;</button>
+          </div>
+        </fieldset>
+
+        <!-- ETAPA 3 -->
+        <fieldset class="form-step" id="s2">
+          <p class="step-title">Vida Sacramental</p>
+
+          <div class="field">
+            <label>Sacramentos recebidos</label>
+            <div class="check-group">
+              <label class="opt-label">
+                <input type="checkbox" name="sacramentos" value="Batismo">Batismo
+              </label>
+              <label class="opt-label">
+                <input type="checkbox" name="sacramentos" value="Primeira Eucaristia">Primeira Eucaristia
+              </label>
+              <label class="opt-label">
+                <input type="checkbox" name="sacramentos" value="Crisma">Crisma (Confirmação)
+              </label>
+              <label class="opt-label">
+                <input type="checkbox" name="sacramentos" value="Matrimônio">Matrimônio
+              </label>
+              <label class="opt-label">
+                <input type="checkbox" name="sacramentos" value="Ordem / Vida Consagrada">Ordem Sacra / Vida Consagrada
+              </label>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="estadoCivil">Estado Civil <span class="req">*</span></label>
+            <select class="sel" id="estadoCivil" name="estadoCivil" required>
+              <option value="">Selecione...</option>
+              <option value="Solteiro(a)">Solteiro(a)</option>
+              <option value="Casado(a)">Casado(a)</option>
+              <option value="Divorciado(a) / Separado(a)">Divorciado(a) / Separado(a)</option>
+              <option value="Viúvo(a)">Viúvo(a)</option>
+              <option value="Vida Consagrada">Vida Consagrada / Religiosa</option>
+            </select>
+            <p class="err-msg" id="e-civil">Campo obrigatório.</p>
+          </div>
+
+          <div class="field">
+            <label>Participa de grupo ou ministério paroquial?</label>
+            <div class="radio-group">
+              <label class="opt-label">
+                <input type="radio" name="grupoAtual" value="Sim, já participo">
+                Sim, já participo de um grupo
+              </label>
+              <label class="opt-label">
+                <input type="radio" name="grupoAtual" value="Ainda não participo">
+                Ainda não participo de nenhum grupo
+              </label>
+            </div>
+          </div>
+
+          <div class="btn-row">
+            <button type="button" class="btn-back" onclick="goPrev()">&larr; Voltar</button>
+            <button type="button" class="btn-next" onclick="goNext()">Continuar &rarr;</button>
+          </div>
+        </fieldset>
+
+        <!-- ETAPA 4 -->
+        <fieldset class="form-step" id="s3">
+          <p class="step-title">Chamado e Missão</p>
+
+          <div class="field">
+            <label for="comoConheceu">Como conheceu a Nova Forma? <span class="req">*</span></label>
+            <select class="sel" id="comoConheceu" name="comoConheceu" required>
+              <option value="">Selecione...</option>
+              <option value="Indicação de amigo ou familiar">Indicação de amigo ou familiar</option>
+              <option value="Na minha paróquia">Na minha paróquia</option>
+              <option value="Redes sociais">Redes sociais</option>
+              <option value="Evento ou retiro">Evento ou retiro</option>
+              <option value="Outro meio">Outro meio</option>
+            </select>
+            <p class="err-msg" id="e-como">Campo obrigatório.</p>
+          </div>
+
+          <div class="field">
+            <label for="ministerio">Área de interesse ou ministério</label>
+            <select class="sel" id="ministerio" name="ministerio">
+              <option value="">Selecione (opcional)</option>
+              <option value="Liturgia e Louvor">Liturgia e Louvor</option>
+              <option value="Catequese e Formação">Catequese e Formação</option>
+              <option value="Assistência Social e Caridade">Assistência Social e Caridade</option>
+              <option value="Pastoral da Juventude">Pastoral da Juventude</option>
+              <option value="Pastoral da Família">Pastoral da Família</option>
+              <option value="Comunicação e Mídias">Comunicação e Mídias</option>
+              <option value="Ainda não sei">Ainda não sei</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="objetivo">Testemunho ou motivação <span class="req">*</span></label>
+            <textarea class="ta" id="objetivo" name="objetivo" rows="4"
+              placeholder="Compartilhe brevemente o que motivou seu interesse na Nova Forma..." required></textarea>
+            <p class="err-msg" id="e-obj">Por favor, escreva seu testemunho.</p>
+          </div>
+
+          <div class="btn-row">
+            <button type="button" class="btn-back" onclick="goPrev()">&larr; Voltar</button>
+            <button type="submit" class="btn-next" id="submitBtn">Enviar Cadastro</button>
+          </div>
+        </fieldset>
+
+      </form>
+
+      <!-- SUCCESS -->
+      <div class="success" id="successMsg" aria-live="polite">
+        <div class="success-icon" aria-hidden="true">
+          <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+            <path d="M5 13l6 6L21 7" stroke="#C9A84C" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h2 class="success-title">Cadastro recebido!</h2>
+        <p class="success-sub">
+          Obrigado por se cadastrar na Comunidade Nova Forma.<br>
+          Em breve nossa equipe entrará em contato para acolhê-lo(a).
+          <em>"Eu sou o caminho, a verdade e a vida." — Jo 14,6</em>
+        </p>
+      </div>
+
+    </div><!-- /form-panel -->
+  </div><!-- /card -->
+</main>
+
+<script>
+let step = 0;
+const TOTAL = 4;
+
+const steps    = document.querySelectorAll('.form-step');
+const dots     = document.querySelectorAll('.dot');
+const stepMeta = document.getElementById('stepMeta');
+
+function showStep(i) {
+  steps.forEach((s, idx) => s.classList.toggle('active', idx === i));
+  dots.forEach((d, idx) => {
+    d.classList.toggle('active', idx === i);
+    d.classList.toggle('done', idx < i);
+  });
+  stepMeta.textContent = `Etapa ${i + 1} de ${TOTAL}`;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function validate(i) {
+  let ok = true;
+
+  function chk(id, errId, test) {
+    const el = document.getElementById(id);
+    const em = document.getElementById(errId);
+    if (!test(el)) {
+      el.classList.add('err');
+      if (em) em.classList.add('on');
+      ok = false;
+    } else {
+      el.classList.remove('err');
+      if (em) em.classList.remove('on');
+    }
+  }
+
+  if (i === 0) {
+    chk('nome',      'e-nome',  el => el.value.trim().length >= 3);
+    chk('nascimento','e-nasc',  el => el.value !== '');
+    chk('sexo',      'e-sexo',  el => el.value !== '');
+    chk('telefone',  'e-tel',   el => el.value.replace(/\D/g,'').length >= 10);
+    chk('email',     'e-email', el => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value.trim()));
+  }
+  if (i === 1) {
+    chk('paroquia', 'e-par', el => el.value.trim().length >= 3);
+    chk('cidade',   'e-cid', el => el.value.trim().length >= 2);
+    chk('estado',   'e-est', el => el.value !== '');
+  }
+  if (i === 2) {
+    chk('estadoCivil', 'e-civil', el => el.value !== '');
+  }
+  if (i === 3) {
+    chk('comoConheceu', 'e-como', el => el.value !== '');
+    chk('objetivo',     'e-obj',  el => el.value.trim().length >= 10);
+  }
+
+  return ok;
+}
+
+function goNext() {
+  if (!validate(step)) return;
+  if (step < TOTAL - 1) { step++; showStep(step); }
+}
+
+function goPrev() {
+  if (step > 0) { step--; showStep(step); }
+}
+
+document.getElementById('mainForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  if (!validate(3)) return;
+
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Enviando...';
+
+  try {
+    const res = await fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(new FormData(this)).toString()
+    });
+
+    if (res.ok) {
+      this.style.display = 'none';
+      document.getElementById('progressWrap').style.display = 'none';
+      document.getElementById('successMsg').classList.add('on');
+    } else {
+      btn.disabled = false;
+      btn.textContent = 'Enviar Cadastro';
+      alert('Ocorreu um erro ao enviar. Por favor, tente novamente.');
+    }
+  } catch (err) {
+    btn.disabled = false;
+    btn.textContent = 'Enviar Cadastro';
+    alert('Ocorreu um erro ao enviar. Por favor, tente novamente.');
+  }
+});
+
+document.getElementById('telefone').addEventListener('input', function() {
+  let v = this.value.replace(/\D/g,'');
+  if (v.length > 11) v = v.slice(0, 11);
+  v = v.replace(/^(\d{2})(\d)/, '($1) $2');
+  v = v.replace(/(\d{5})(\d{1,4})$/, '$1-$2');
+  this.value = v;
+});
+
+document.querySelectorAll('.input, .sel, .ta').forEach(el => {
+  el.addEventListener('input',  () => el.classList.remove('err'));
+  el.addEventListener('change', () => el.classList.remove('err'));
+});
+</script>
+
+</body>
+</html>
