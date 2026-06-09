@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Nova Forma | Cadastro</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Inter',sans-serif;
+}
+
+body{
+background:#0A0A0A;
+color:#F5E6A8;
+overflow-x:hidden;
+}
+
+.hero{
+background:
+linear-gradient(
+135deg,
+#000000,
+#111111
+);
+
+min-height:100vh;
+}
+
+.glass{
+background:rgba(20,20,20,.95);
+backdrop-filter:blur(20px);
+border:1px solid rgba(212,175,55,.15);
+}
+
+.input{
+width:100%;
+padding:15px;
+border:1px solid rgba(212,175,55,.25);
+border-radius:14px;
+transition:.3s;
+background:#111111;
+color:#F5E6A8;
+}
+
+.input:focus{
+outline:none;
+border-color:#D4AF37;
+box-shadow:0 0 0 4px rgba(212,175,55,.15);
+}
+
+.btn-primary{
+background:#D4AF37;
+color:#000000;
+padding:14px 28px;
+border-radius:14px;
+font-weight:600;
+transition:.3s;
+}
+
+.btn-primary:hover{
+background:#E5C158;
+}
+
+.progress-container{
+height:10px;
+background:#1A1A1A;
+border-radius:999px;
+overflow:hidden;
+}
+
+.progress-bar{
+height:100%;
+width:14%;
+background:
+linear-gradient(
+90deg,
+#D4AF37,
+#F5E6A8
+);
+transition:.4s;
+}
+
+.step{
+display:none;
+}
+
+.step.active{
+display:block;
+animation:fade .4s ease;
+}
+
+@keyframes fade{
+
+from{
+opacity:0;
+transform:translateY(15px);
+}
+
+to{
+opacity:1;
+transform:translateY(0);
+}
+
+}
+
+.logo-circle{
+
+width:90px;
+height:90px;
+
+background:#D4AF37;
+
+border-radius:50%;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+margin:auto;
+
+font-size:2rem;
+font-weight:800;
+
+color:#000000;
+
+box-shadow:
+0 15px 40px rgba(212,175,55,.25);
+
+}
+
+  </style>
+</head>
+
+<body>
+
+<section class="hero flex items-center justify-center p-6">
+
+<div class="w-full max-w-5xl">
+
+<div class="text-center mb-10">
+
+<div class="logo-circle">
+
+✠
+
+</div>
+
+<h1 class="text-white text-5xl md:text-6xl font-extrabold mt-6">
+
+Nova Forma
+
+</h1>
+
+<p class="text-white/90 mt-4 text-lg">
+
+Cadastro Oficial da Comunidade
+
+</p>
+
+</div>
+
+<div class="glass rounded-3xl shadow-2xl p-8 md:p-12">
+
+<div class="mb-8">
+
+<div class="flex justify-between text-sm mb-3">
+
+<span>
+Etapa <span id="currentStep">1</span> de 7
+</span>
+
+<span id="progressText">
+14%
+</span>
+
+</div>
+
+<div class="progress-container">
+
+<div
+id="progressBar"
+class="progress-bar">
+
+</div>
+
+</div>
+
+</div>
+
+<form id="formNovaForma">
+
+<!-- ETAPA 1 -->
+
+<div class="step active">
+
+<h2 class="text-3xl font-bold mb-2">
+
+Bem-vindo(a)
+
+</h2>
+
+<p class="text-slate-500 mb-8">
+
+Vamos conhecer você melhor.
+
+</p>
+
+<div class="grid md:grid-cols-2 gap-5">
+
+<div>
+
+<label class="block mb-2 font-medium">
+Nome Completo
+</label>
+
+<input
+id="nome"
+class="input"
+required>
+
+</div>
+
+<div>
+
+<label class="block mb-2 font-medium">
+WhatsApp
+</label>
+
+<input
+id="telefone"
+class="input"
+required>
+
+</div>
+
+</div>
+
+<div class="grid md:grid-cols-2 gap-5 mt-5">
+
+<div>
+
+<label class="block mb-2 font-medium">
+E-mail
+</label>
+
+<input
+type="email"
+id="email"
+class="input">
+
+</div>
+
+<div>
+
+<label class="block mb-2 font-medium">
+Data de Nascimento
+</label>
+
+<input
+type="date"
+id="nascimento"
+class="input">
+
+</div>
+
+</div>
+
+<div class="flex justify-end mt-8">
+
+<button
+type="button"
+onclick="nextStep()"
+class="btn-primary">
+
+Continuar
+
+</button>
+
+</div>
+
+</div>
+
+<!-- ETAPA 2 -->
+
+<div class="step">
+
+<h2 class="text-3xl font-bold mb-2">
+Vida Cristã
+</h2>
+
+<p class="text-slate-500 mb-8">
+Conte um pouco sobre sua caminhada na Igreja.
+</p>
+
+<div class="mb-6">
+
+<label class="block font-medium mb-3">
+Sacramentos recebidos
+</label>
+
+<div class="grid md:grid-cols-2 gap-3">
+
+<label class="flex items-center gap-3 p-4 border rounded-xl">
+<input type="checkbox" id="batismo">
+Batismo
+</label>
+
+<label class="flex items-center gap-3 p-4 border rounded-xl">
+<input type="checkbox" id="eucaristia">
+Primeira Eucaristia
+</label>
+
+<label class="flex items-center gap-3 p-4 border rounded-xl">
+<input type="checkbox" id="crisma">
+Crisma
+</label>
+
+<label class="flex items-center gap-3 p-4 border rounded-xl">
+<input type="checkbox" id="matrimonio">
+Matrimônio
+</label>
+
+</div>
+
+</div>
+
+<div class="grid md:grid-cols-2 gap-5">
+
+<div>
+
+<label class="block mb-2 font-medium">
+Paróquia que frequenta
+</label>
+
+<input
+id="paroquia"
+class="input"
+placeholder="Nome da paróquia">
+
+</div>
+
+<div>
+
+<label class="block mb-2 font-medium">
+Cidade
+</label>
+
+<input
+id="cidade"
+class="input"
+placeholder="Sua cidade">
+
+</div>
+
+</div>
+
+<div class="mt-5">
+
+<label class="block mb-2 font-medium">
+Participa de alguma pastoral ou movimento?
+</label>
+
+<input
+id="movimento"
+class="input"
+placeholder="Ex.: RCC, Coroinhas, Liturgia...">
+
+</div>
+
+<div class="flex justify-between mt-8">
+
+<button
+type="button"
+onclick="prevStep()"
+class="px-6 py-3 rounded-xl border">
+
+Voltar
+
+</button>
+
+<button
+type="button"
+onclick="nextStep()"
+class="btn-primary">
+
+Continuar
+
+</button>
+
+</div>
+
+</div>
+
+<!-- ETAPA 3 -->
+
+<div class="step">
+
+<h2 class="text-3xl font-bold mb-2">
+Sua Caminhada
+</h2>
+
+<p class="text-slate-500 mb-8">
+Queremos conhecer sua história.
+</p>
+
+<div>
+
+<label class="block mb-2 font-medium">
+Como conheceu a Nova Forma?
+</label>
+
+<select
+id="comoConheceu"
+class="input">
+
+<option>Instagram</option>
+<option>TikTok</option>
+<option>Facebook</option>
+<option>YouTube</option>
+<option>Amigos</option>
+<option>Família</option>
+<option>Evento</option>
+<option>Outro</option>
+
+</select>
+
+</div>
+
+<div class="mt-5">
+
+<label class="block mb-2 font-medium">
+Há quanto tempo participa da comunidade?
+</label>
+
+<select
+id="tempoComunidade"
+class="input">
+
+<option>Primeira vez</option>
+<option>Menos de 6 meses</option>
+<option>6 meses a 1 ano</option>
+<option>1 a 3 anos</option>
+<option>Mais de 3 anos</option>
+
+</select>
+
+</div>
+
+<div class="mt-5">
+
+<label class="block mb-2 font-medium">
+O que você busca na Nova Forma?
+</label>
+
+<textarea
+id="objetivo"
+rows="5"
+class="input"
+placeholder="Partilhe seu desejo, propósito ou expectativa..."></textarea>
+
+</div>
+
+<div class="flex justify-between mt-8">
+
+<button
+type="button"
+onclick="prevStep()"
+class="px-6 py-3 rounded-xl border">
+
+Voltar
+
+</button>
+
+<button
+type="button"
+onclick="nextStep()"
+class="btn-primary">
+
+Continuar
+
+</button>
+
+</div>
+
+</div>
+
+<!-- ETAPA 4 -->
+
+<div class="step">
+
+<h2 class="text-3xl font-bold mb-2">
+Ministérios
+</h2>
+
+<p class="text-slate-500 mb-8">
+Em qual área você gostaria de servir?
+</p>
+
+<div class="grid md:grid-cols-2 gap-4">
+
+<label class="flex items-center gap-3 p-4 border rounded-xl">
+<input type="checkbox" value="Louvor">
+Louvor
+</label>
+
+<label class="flex items-center gap-3 p-4 border rounded-xl">
+<input type="checkbox" value="Intercessão">
+Intercessão
+</label>
+
+<label class="flex items-center gap-3 p-4 border rounded-xl">
+<input type="checkbox" value="Recepção">
+Recepção
+</label>
+
+<label class="flex items-center gap-3 p-4 border rounded-xl">
+<input type="checkbox" value="Comunicação">
+Comunicação
+</label>
+
+<label class="flex items-center gap-3 p-4 border rounded-xl">
+<input type="checkbox" value="Mídia">
+Mídia
+</label>
+
+<label class="flex items-center gap-3 p-4 border rounded-xl">
+<input type="checkbox" value="Eventos">
+Eventos
+</label>
+
+<label class="flex items-center gap-3 p-4 border rounded-xl">
+<input type="checkbox" value="Evangelização">
+Evangelização
+</label>
+
+<label class="flex items-center gap-3 p-4 border rounded-xl">
+<input type="checkbox" value="Ainda discernindo">
+Ainda discernindo
+</label>
+
+</div>
+
+<div class="mt-5">
+
+<label class="block mb-2 font-medium">
+Dons e talentos
+</label>
+
+<textarea
+id="talentos"
+rows="4"
+class="input"
+placeholder="Música, tecnologia, liderança, fotografia, organização..."></textarea>
+
+</div>
+
+<div class="flex justify-between mt-8">
+
+<button
+type="button"
+onclick="prevStep()"
+class="px-6 py-3 rounded-xl border">
+
+Voltar
+
+</button>
+
+<button
+type="button"
+onclick="nextStep()"
+class="btn-primary">
+
+Continuar
+
+</button>
+
+</div>
+
+</div>
+
+<!-- ETAPA 5 -->
+
+<div class="step">
+
+<h2 class="text-3xl font-bold mb-2">
+Pedido de Oração
+</h2>
+
+<p class="text-slate-500 mb-8">
+Se desejar, compartilhe uma intenção para que possamos rezar por você.
+</p>
+
+<div>
+
+<label class="block mb-2 font-medium">
+Pedido de Oração
+</label>
+
+<textarea
+id="pedidoOracao"
+rows="6"
+class="input"
+placeholder="Escreva aqui seu pedido de oração..."></textarea>
+
+</div>
+
+<div class="mt-5">
+
+<label class="block mb-2 font-medium">
+Gostaria de receber acompanhamento espiritual?
+</label>
+
+<select
+id="acompanhamento"
+class="input">
+
+<option>Sim</option>
+<option>Não</option>
+
+</select>
+
+</div>
+
+<div class="flex justify-between mt-8">
+
+<button
+type="button"
+onclick="prevStep()"
+class="px-6 py-3 rounded-xl border">
+
+Voltar
+
+</button>
+
+<button
+type="button"
+onclick="nextStep()"
+class="btn-primary">
+
+Continuar
+
+</button>
+
+</div>
+
+</div>
+
+<!-- ETAPA 6 -->
+
+<div class="step">
+
+<h2 class="text-3xl font-bold mb-2">
+Informações Complementares
+</h2>
+
+<p class="text-slate-500 mb-8">
+Alguns dados adicionais.
+</p>
+
+<div class="grid md:grid-cols-2 gap-5">
+
+<div>
+
+<label class="block mb-2 font-medium">
+Estado Civil
+</label>
+
+<select
+id="estadoCivil"
+class="input">
+
+<option>Solteiro(a)</option>
+<option>Namorando</option>
+<option>Noivo(a)</option>
+<option>Casado(a)</option>
+<option>Viúvo(a)</option>
+
+</select>
+
+</div>
+
+<div>
+
+<label class="block mb-2 font-medium">
+Profissão
+</label>
+
+<input
+id="profissao"
+class="input">
+
+</div>
+
+</div>
+
+<div class="mt-5">
+
+<label class="block mb-2 font-medium">
+Observações adicionais
+</label>
+
+<textarea
+id="observacoes"
+rows="5"
+class="input"></textarea>
+
+</div>
+
+<div class="flex justify-between mt-8">
+
+<button
+type="button"
+onclick="prevStep()"
+class="px-6 py-3 rounded-xl border">
+
+Voltar
+
+</button>
+
+<button
+type="button"
+onclick="nextStep()"
+class="btn-primary">
+
+Continuar
+
+</button>
+
+</div>
+
+</div>
+
+<!-- ETAPA 7 -->
+
+<div class="step">
+
+<h2 class="text-3xl font-bold mb-2">
+Revisão Final
+</h2>
+
+<p class="text-slate-500 mb-8">
+Confira seus dados antes de enviar.
+</p>
+
+<div
+id="reviewData"
+class="bg-slate-50 rounded-2xl p-6 border">
+
+</div>
+
+<div class="flex justify-between mt-8">
+
+<button
+type="button"
+onclick="prevStep()"
+class="px-6 py-3 rounded-xl border">
+
+Voltar
+
+</button>
+
+<button
+type="submit"
+class="btn-primary">
+
+Finalizar Cadastro
+
+</button>
+
+</div>
+
+</div>
+
+</form>
+
+<!-- SUCESSO -->
+
+<div
+id="successScreen"
+class="hidden text-center py-16">
+
+<div class="text-7xl mb-6">
+🙏
+</div>
+
+<h2 class="text-4xl font-bold mb-4">
+Cadastro Enviado
+</h2>
+
+<p class="text-slate-500 max-w-xl mx-auto">
+Obrigado por fazer parte da Nova Forma.
+Em breve nossa equipe entrará em contato.
+Que Deus abençoe sua caminhada.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<script>
+
+const steps =
+document.querySelectorAll(".step");
+
+const progressBar =
+document.getElementById("progressBar");
+
+const currentStepText =
+document.getElementById("currentStep");
+
+const progressText =
+document.getElementById("progressText");
+
+const reviewData =
+document.getElementById("reviewData");
+
+const form =
+document.getElementById("formNovaForma");
+
+let currentStep = 0;
+
+function updateProgress(){
+
+const percentage =
+((currentStep + 1) / steps.length) * 100;
+
+progressBar.style.width =
+percentage + "%";
+
+currentStepText.textContent =
+currentStep + 1;
+
+progressText.textContent =
+Math.round(percentage) + "%";
+
+}
+
+function showStep(index){
+
+steps.forEach(step=>{
+
+step.classList.remove("active");
+
+});
+
+steps[index].classList.add("active");
+
+updateProgress();
+
+if(index === 6){
+
+generateReview();
+
+}
+
+}
+
+function nextStep(){
+
+if(currentStep < steps.length - 1){
+
+currentStep++;
+
+showStep(currentStep);
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+}
+
+}
+
+function prevStep(){
+
+if(currentStep > 0){
+
+currentStep--;
+
+showStep(currentStep);
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+}
+
+}
+
+function generateReview(){
+
+reviewData.innerHTML = `
+
+<div class="space-y-3">
+
+<p><strong>Nome:</strong> ${nome.value}</p>
+
+<p><strong>WhatsApp:</strong> ${telefone.value}</p>
+
+<p><strong>Email:</strong> ${email.value}</p>
+
+<p><strong>Paróquia:</strong> ${paroquia.value}</p>
+
+<p><strong>Cidade:</strong> ${cidade.value}</p>
+
+<p><strong>Profissão:</strong> ${profissao.value}</p>
+
+<p><strong>Estado Civil:</strong> ${estadoCivil.value}</p>
+
+<p><strong>Objetivo:</strong> ${objetivo.value}</p>
+
+<p><strong>Pedido de Oração:</strong> ${pedidoOracao.value}</p>
+
+</div>
+
+`;
+
+}
+
+form.addEventListener("submit",function(e){
+
+e.preventDefault();
+
+const dados = {
+
+nome: nome.value,
+telefone: telefone.value,
+email: email.value,
+nascimento: nascimento.value,
+
+paroquia: paroquia.value,
+cidade: cidade.value,
+movimento: movimento.value,
+
+comoConheceu: comoConheceu.value,
+tempoComunidade: tempoComunidade.value,
+objetivo: objetivo.value,
+
+talentos: talentos.value,
+
+pedidoOracao: pedidoOracao.value,
+acompanhamento: acompanhamento.value,
+
+estadoCivil: estadoCivil.value,
+profissao: profissao.value,
+observacoes: observacoes.value,
+
+dataCadastro:
+new Date().toISOString()
+
+};
+
+console.log("PRONTO PARA FIREBASE", dados);
+
+document.getElementById(
+"formNovaForma"
+).style.display = "none";
+
+document.getElementById(
+"successScreen"
+).classList.remove("hidden");
+
+});
+
+updateProgress();
+<script>
+
+/* ====================================
+MÁSCARA WHATSAPP
+==================================== */
+
+const telefoneInput =
+document.getElementById("telefone");
+
+telefoneInput.addEventListener(
+"input",
+function(e){
+
+let value =
+e.target.value.replace(/\D/g,'');
+
+value =
+value.replace(
+/(\d{2})(\d)/,
+'($1) $2'
+);
+
+value =
+value.replace(
+/(\d{5})(\d)/,
+'$1-$2'
+);
+
+e.target.value = value;
+
+}
+);
+
+/* ====================================
+SALVAMENTO AUTOMÁTICO
+==================================== */
+
+const campos =
+document.querySelectorAll(
+"input, textarea, select"
+);
+
+campos.forEach(campo=>{
+
+campo.addEventListener(
+"input",
+saveDraft
+);
+
+});
+
+function saveDraft(){
+
+const draft = {};
+
+campos.forEach(campo=>{
+
+draft[campo.id] =
+campo.value;
+
+});
+
+localStorage.setItem(
+"novaFormaDraft",
+JSON.stringify(draft)
+);
+
+}
+
+function loadDraft(){
+
+const draft =
+JSON.parse(
+localStorage.getItem(
+"novaFormaDraft"
+)
+);
+
+if(!draft) return;
+
+campos.forEach(campo=>{
+
+if(draft[campo.id]){
+
+campo.value =
+draft[campo.id];
+
+}
+
+});
+
+}
+
+loadDraft();
+
+/* ====================================
+ANIMAÇÕES NOS INPUTS
+==================================== */
+
+document
+.querySelectorAll(".input")
+.forEach(input=>{
+
+input.addEventListener(
+"focus",
+()=>{
+
+input.style.transform =
+"translateY(-2px)";
+
+});
+
+input.addEventListener(
+"blur",
+()=>{
+
+input.style.transform =
+"translateY(0px)";
+
+});
+
+});
+
+/* ====================================
+VALIDAÇÃO AVANÇADA
+==================================== */
+
+function validarEtapaAtual(){
+
+if(currentStep === 0){
+
+if(nome.value.trim() === ""){
+
+alert(
+"Informe seu nome."
+);
+
+return false;
+
+}
+
+if(
+telefone.value.trim() === ""
+){
+
+alert(
+"Informe seu WhatsApp."
+);
+
+return false;
+
+}
+
+}
+
+return true;
+
+}
+
+const originalNextStep =
+nextStep;
+
+nextStep = function(){
+
+if(
+!validarEtapaAtual()
+){
+
+return;
+
+}
+
+originalNextStep();
+
+};
+
+/* ====================================
+TECLA ENTER
+==================================== */
+
+document.addEventListener(
+"keydown",
+function(e){
+
+if(
+e.key === "Enter" &&
+e.target.tagName !== "TEXTAREA"
+){
+
+e.preventDefault();
+
+}
+
+}
+);
+
+/* ====================================
+EFEITO SCROLL TOP
+==================================== */
+
+window.scrollTo({
+top:0
+});
+
+/* ====================================
+MODO ESCURO
+==================================== */
+
+
+
+/* ====================================
+COLETA DOS MINISTÉRIOS
+==================================== */
+
+function getMinisterios(){
+
+const ministerios = [];
+
+document
+.querySelectorAll(
+'input[type="checkbox"][value]'
+)
+.forEach(item=>{
+
+if(item.checked){
+
+ministerios.push(
+item.value
+);
+
+}
+
+});
+
+return ministerios;
+
+}
+
+/* ====================================
+SUBSTITUIR OBJETO FIREBASE
+==================================== */
+
+/*
+SUBSTITUA DENTRO DO SUBMIT:
+
+ministerios:
+getMinisterios(),
+
+sacramentos:{
+batismo:
+document.getElementById("batismo").checked,
+
+eucaristia:
+document.getElementById("eucaristia").checked,
+
+crisma:
+document.getElementById("crisma").checked,
+
+matrimonio:
+document.getElementById("matrimonio").checked
+}
+
+*/
+
+/* ====================================
+SUCESSO PREMIUM
+==================================== */
+
+function launchConfetti(){
+
+for(let i=0;i<50;i++){
+
+const confetti =
+document.createElement("div");
+
+confetti.style.position =
+"fixed";
+
+confetti.style.width =
+"8px";
+
+confetti.style.height =
+"8px";
+
+confetti.style.background =
+[
+"#7A1631",
+"#D4AF37",
+"#A51E44"
+][Math.floor(Math.random()*3)];
+
+confetti.style.left =
+Math.random()*100+"vw";
+
+confetti.style.top =
+"-10px";
+
+confetti.style.borderRadius =
+"50%";
+
+confetti.style.zIndex =
+9999;
+
+document.body.appendChild(
+confetti
+);
+
+const speed =
+Math.random()*5+2;
+
+let pos = -10;
+
+const fall =
+setInterval(()=>{
+
+pos += speed;
+
+confetti.style.top =
+pos+"px";
+
+if(pos > window.innerHeight){
+
+clearInterval(fall);
+
+confetti.remove();
+
+}
+
+},16);
+
+}
+
+}
+
+/* ====================================
+CHAMAR AO ENVIAR
+==================================== */
+
+const originalSubmit =
+form.onsubmit;
+
+form.addEventListener(
+"submit",
+()=>{
+
+localStorage.removeItem(
+"novaFormaDraft"
+);
+
+setTimeout(()=>{
+
+launchConfetti();
+
+},500);
+
+}
+);
+
+</script>
+
+</body>
+</html>
+</script>
+
